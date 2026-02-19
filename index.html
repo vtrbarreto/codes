@@ -24,8 +24,8 @@
         const urlParams = new URLSearchParams(window.location.search);
 
         // 2. Converte para número ou define um valor padrão (Goiânia como exemplo)
-        const lat = parseFloat(urlParams.get("lat")) || -16.655047;
-        const lng = parseFloat(urlParams.get("lng")) || -49.325228;
+        const lat = parseFloat(urlParams.get("lat"));// || -16.655047;
+        const lng = parseFloat(urlParams.get("lng"));//|| -49.325228;
         const alt = parseFloat(urlParams.get("alt")) || 800;
 
         const { Map3DElement, Marker3DElement } =
