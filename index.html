@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>3d Map</title>
+
+    <style type="text/css">
+      #gmp-map-3d {
+        height: 100%;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- prettier-ignore -->
+    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly",});</script>
+    <script>
+      async function initMap() {
+        // 1. Captura os parâmetros da URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 2. Converte para número ou define um valor padrão (Goiânia como exemplo)
+        const lat = parseFloat(urlParams.get("lat")) || -16.655047;
+        const lng = parseFloat(urlParams.get("lng")) || -49.325228;
+        const alt = parseFloat(urlParams.get("alt")) || 800;
+
+        const { Map3DElement, Marker3DElement } =
+          await google.maps.importLibrary("maps3d");
+
+        const map = new Map3DElement({
+          center: { lat: lat, lng: lng, altitude: alt },
+          tilt: 50,
+          range: 100, // Distância da câmera até o prédio (ajuste este valor para zoom)
+          heading: 0, // Direção (0 = Norte)
+          mode: "HYBRID",
+          //defaultUiDisabled: true,
+          //gestureHandling: 'COOPERATIVE',
+        });
+
+        document.body.append(map);
+
+        // Adicionando o PIN (Marcador 3D)
+        const marker = new Marker3DElement({
+          position: { lat: lat, lng: lng, altitude: 0 }, // Altitude 0 fixa o pin no chão/telhado
+          title: "Ponto Selecionado",
+        });
+
+        // Anexa o marcador ao mapa
+        map.append(marker);
+      }
+
+      initMap();
+    </script>
+  </body>
+</html>
